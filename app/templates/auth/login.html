@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block content %}
+    {% if current_user.is_authenticated %}
+        <div class="jumbotron text-center">
+            <h1 class="display-3">Olá {{ current_user.name }}</h1>
+            <p class="lead mt-5"> Você já está logado.</p>        
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="{{ url_for('auth.logout') }}" role="button">Logout</a>
+            </p>
+        </div>
+    {% else %}
+        <div class="jump-100"></div>
+        
+        <div class="jumbotron text-center">
+            <h1 class="display-3">Login </h1>
+            {{ wtf.quick_form(form) }}
+            <a class="btn btn-primary mt-5" href="{{ url_for('auth.register') }}" role="button">Registrar</a>
+        </div>
+    {% endif %}
+{% endblock %}

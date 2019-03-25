@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  outrora:
+    build: .
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "5000"
+    env_file: .env

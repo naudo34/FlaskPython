@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container py-5">
+        {% if current_user.is_authenticated %}
+            <p class="text-center"> 
+                Seja bem-vindo {{ current_user.name }}
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+            </p>
+            <div class="content-outrora">
+                <form action="{{ url_for('home.index') }}" method="POST">
+                    {{ form.csrf_token }}
+                    <div class="input-group mb-3">
+                        {{ form.title(class='form-control form-control-lg', placeholder='Título da tarefa') }}
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-lg btn-outline-danger" onclick="addTodo()" type="button">Adicionar</button>
+                        </div>
+                    </div>
+                </form>
+        
+                <!-- Break Line in 100px -->
+                <div class="jump-100"></div>
+        
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for todo in todos %}
+                                <tr>    
+                                    <td>{{todo.title}}</td>
+                                    <td>         
+                                        <a href="{{ url_for('home.delete_task', id=todo.id  ) }}" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt icon-white"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% else %}
+            <div class="jumbotron text-center">
+                <h1 class="display-3">Olá visitante</h1>
+                <p class="lead mt-5"> Você precisa está logado para acessar o sistema.</p>
+                <hr class="my-4">
+                <p>Clique no botão abaixo para logar no sistema.
+                </p>
+            
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" href="{{ url_for('auth.login') }}" role="button">Logar</a>
+                </p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="http://codeseven.github.io/toastr/build/toastr.min.js"></script>
+    <script>
+        var message = "{{ get_flashed_messages()[0] }}"
+        var color = "{{ get_flashed_messages()[1] }}"
+
+        localStorage.setItem('message', message);
+        localStorage.setItem('color', color);
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "500",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    
+        $(document).ready(function () {
+            if(localStorage.getItem("message")){
+                toastr["" + localStorage.getItem('color')](localStorage.getItem('message'))
+            }
+        })
+
+    </script>
+{% endblock %}

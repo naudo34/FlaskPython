@@ -1,0 +1,32 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap4-bubblegum.min.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" />
+{% endblock %}
+
+{% block navbar %}
+<div class="jumbotron bg-danger text-white radius-0 mb-0">
+    <div class="container">
+        <h1 class="display-1 text-chicle text-light">Outrora List</h1>
+        <span class="lead text-light">Gerenciador de tarefas.</span>
+    </div>
+</div>
+{% endblock %}
+
+<div>
+    <div class="container py-5">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+{% block footer %}
+    <footer class="footer text-center">
+        <h4 class=" jump-30">Outrora - todos os direitos reservados</h4>
+        <p>
+            <a href="#">Login</a>
+        </p>
+    </footer>
+{% endblock %}
